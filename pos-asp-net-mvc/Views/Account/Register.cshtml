@@ -1,0 +1,55 @@
+﻿@model pos_asp_net_mvc.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="col-md-4 col-centered">
+    <h1></h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-sign-in"></i>&nbsp; <strong>Sign in to start your session</strong>
+        </div>
+        <div class="panel-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="ConfirmPassword">Password Confirmation</label>
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-default btn-block">
+                    <i class="fa fa-edit"></i>&nbsp;Register Now
+                </button>
+            }
+        </div>
+
+        <div class="panel-footer text-center">
+            @Html.ActionLink("Already acoount ?", "Login")
+        </div>
+
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

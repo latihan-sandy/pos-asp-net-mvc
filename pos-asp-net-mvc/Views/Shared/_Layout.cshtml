@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Point Of Sale - @ViewBag.Title</title>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+        <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+        <link href="~/Content/app.css" rel="stylesheet">
+        <link href="~/Plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
+        <link href="~/Plugins/select2/select2.min.css" rel="stylesheet">
+        <link href="~/Plugins/select2/select2-bootstrap.min.css" rel="stylesheet">
+        <link href="~/Plugins/datepicker/datepicker3.css" rel="stylesheet">
+        <link href="~/Plugins/sweetalert/sweetalert.css" rel="stylesheet">
+        <link href="~/Plugins/toast/toastr.min.css" rel="stylesheet">
+        <link href="~/Plugins/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="~/Image/icon.png">
+        @Scripts.Render("~/bundles/modernizr")
+        @RenderSection("stylesheets", required: false)
+    </head>
+     <body>
+
+         <!-- Navigation -->
+         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+             @Html.Partial("_NavigationPartial")
+         </nav>
+
+         <!-- Page Content -->
+         <div class="container">
+
+             <div class="row">
+                 @RenderBody()
+             </div>
+             <!-- /.row -->
+
+             <hr />
+
+             <!-- Footer -->
+             <footer>
+                 <div class="row">
+                     <div class="col-lg-12">
+                         <p>Copyright &copy; Point Of Sales @DateTime.Now.Year</p>
+                     </div>
+                     <!-- /.col-lg-12 -->
+                 </div>
+                 <!-- /.row -->
+             </footer>
+
+         </div>
+         <!-- /.container -->
+         <!-- jQuery -->
+         <script src="~/Scripts/jquery.js"></script>
+         <!-- Bootstrap Core JavaScript -->
+         <script src="~/Scripts/bootstrap.min.js"></script>
+         <!-- Select2 -->
+         <script src="~/Plugins/select2/select2.min.js"></script>
+         <!-- Date Picker -->
+         <script src="~/Plugins/datepicker/bootstrap-datepicker.js"></script>
+         <!-- DataTables -->
+         <script src="~/Plugins/datatables/jquery.dataTables.min.js"></script>
+         <script src="~/Plugins/datatables/dataTables.bootstrap.min.js"></script>
+         <!-- Other Plugins -->
+         <script src="~/Plugins/sweetalert/sweetalert.min.js"></script>
+         <script src="~/Plugins/daterangepicker/moment.min.js"></script>
+         <script src="~/Plugins/toast/toastr.min.js"></script>
+         <script src="~/Plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
+         <script src="~/Plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+         <!-- Core App jS -->
+         <script src="~/Scripts/App/app.js?@Guid.NewGuid()"></script>
+         @RenderSection("scripts", required: false)
+
+
+     </body>
+</html>

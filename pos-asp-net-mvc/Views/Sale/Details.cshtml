@@ -1,0 +1,150 @@
+﻿
+@model pos_asp_net_mvc.Entities.Transaction
+@using pos_asp_net_mvc.Entities
+@{
+    ViewBag.Title = "Sale";
+    var details = (List<TransactionDetail>)ViewBag.Details;
+}
+
+
+<h1 class="page-header">
+    Sale
+    <small>Transaction</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="javascript:void(0);">Transaction</a></li>
+    <li><a href="@Url.Action("Index", "Sale")">Sale</a></li>
+    <li class="active">Detail</li>
+</ol>
+
+@if (TempData["message_success"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <p class="text-left"><i class="fa fa-check"></i>&nbsp;@Html.Raw(TempData["message_success"])</p>
+    </div>
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                <i class="fa fa-search"></i>&nbsp;<strong>Detail</strong>
+            </div>
+            <div class="pull-right">
+                <a href="@Url.Action("Index", "Sale")" class="btn btn-sm btn-primary">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Back
+                </a>
+                <a href="@Url.Action("Create", "Sale")" class="btn btn-sm btn-success">
+                    <i class="fa fa-plus"></i>&nbsp;Create New
+                </a>
+                
+                @if (Model.Status == 0)
+                {
+                    <a href="@Url.Action("Edit", "Sale", new { id = Model.Id })" class="btn btn-sm btn-warning">
+                        <i class="fa fa-edit"></i>&nbsp;Edit Data
+                    </a>
+                    <a href="@Url.Action("Delete", "Sale", new { id = Model.Id })" class="btn btn-sm btn-danger" id="btn-delete-data">
+                        <i class="fa fa-trash"></i>&nbsp;Delete
+                    </a>
+                }
+                else
+                {
+                    <a href="javascript:void(0);" data-href="@Url.Action("Print", "Sale", new { id = Model.Id })" class="btn btn-sm btn-info" id="btn-print">
+                        <i class="fa fa-print"></i>&nbsp;Print
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="container-fluid table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="2">Invoice Date : @Model.InvoiceDate </th>
+                        <th colspan="2">Invoice Number : @Model.InvoiceNumber</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Customer : @Model.Customer.Name</th>
+                        <th colspan="2">Casheir : @Model.User.UserName</th>
+                    </tr>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        if (details != null)
+                        {
+                            foreach (var row in details)
+                            {
+                                <tr>
+                                    <td>@row.Product.Sku - @row.Product.Name</td>
+                                    <td>@row.Price</td>
+                                    <td>@row.Qty</td>
+                                    <td>@row.Total</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class='text-center'>
+                                <td colspan='4'>
+                                    -- No Items --
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4">Grand Total : @Model.GrandTotal</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="panel-footer">
+        @if (Model.Status == 0)
+        {
+            <span class="label label-danger">Status :  Unpaid</span>
+        }
+        else
+        {
+            <span class="label label-success">Status :  Paid</span>
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  &times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <i class="fa fa-print"></i>&nbsp;Print Invoice
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" id="iframe-invoice" src="~/"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<!-- /.modal -->
+@section Scripts {
+    <script src="~/Scripts/App/sales.js?@Guid.NewGuid()"></script>
+}

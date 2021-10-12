@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Purchase";
+}
+
+<h1 class="page-header">
+    Purchase
+    <small>Management</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="javascript:void(0);">Transaction</a></li>
+    <li class="active">Purchase</li>
+</ol>
+
+@if (TempData["message_success"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <p class="text-left"><i class="fa fa-check"></i>&nbsp;@Html.Raw(TempData["message_success"])</p>
+    </div>
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                <i class="fa fa-table"></i>&nbsp;<strong>List Purchase</strong>
+            </div>
+            <div class="pull-right">
+                <a href="@Url.Action("Create", "Purchase")" class="btn btn-sm btn-info">
+                    <i class="fa fa-plus"></i>&nbsp;Create New
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="container-fluid table-responsive">
+            <table class="table table-striped" id="table-data">
+                <thead>
+                    <tr>
+                        <th>Invoice Date</th>
+                        <th>Invoice Number</th>
+                        <th>Supplier Name</th>
+                        <th>Grand Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+
+@section Scripts {
+    <script src="~/Scripts/App/purchases.js?@Guid.NewGuid()"></script>
+}

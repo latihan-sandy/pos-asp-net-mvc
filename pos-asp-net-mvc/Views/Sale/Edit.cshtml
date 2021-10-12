@@ -1,0 +1,150 @@
+﻿
+@model pos_asp_net_mvc.Entities.Transaction
+@{
+    ViewBag.Title = "Transaction";
+}
+
+<h1 class="page-header">
+    Sale
+    <small>Transaction</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="javascript:void(0);">Transaction</a></li>
+    <li><a href="@Url.Action("Index", "Sale")">Sale</a></li>
+    <li class="active">Manage Transaction</li>
+</ol>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                <i class="fa fa-edit"></i>&nbsp;<strong>Manage Order</strong>
+            </div>
+            <div class="pull-right">
+                <a href="@Url.Action("Index", "Sale")" class="btn btn-sm btn-primary">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Back
+                </a>
+                <a href="@Url.Action("Delete", "Sale", new {  id = Model.Id })" class="btn btn-sm btn-danger" id="btn-delete-data">
+                    <i class="fa fa-trash"></i>&nbsp;Delete
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Edit", "Sale", Model, FormMethod.Post, new { @enctype = "multipart/form-data", @class = "", @id = "form-invoice", @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group col-md-3">
+                <label for="name">Invoice Date</label>
+                <input type="text" class="form-control" value="@Model.InvoiceDate" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="name">Invoice Number</label>
+                <input type="text" class="form-control" value="@Model.InvoiceNumber" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="CustomerId">CustomerId</label>
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control select2", @id = "customer_id" })
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="name">Casheir</label>
+                <input type="text" class="form-control" value="@Model.User.UserName" readonly="readonly" />
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="container-fluid table-responsive">
+                <table class="table" id="table-invoice">
+                    <thead>
+                        <tr>
+                            <th> Product</th>
+                            <th width="200">Price</th>
+                            <th width="90">Stock</th>
+                            <th width="90">Qty</th>
+                            <th width="200">Total</th>
+                            <th width="70">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-info" id="btn-add">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="clearfix"></div>
+
+
+            <div class="form-group col-md-2">
+                <label for="name">Subtotal</label>
+                @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @readonly = "readonly", @id = "subtotal", @step = "any" } })
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Discount (5%)</label>
+                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @readonly = "readonly", @id = "discount", @step = "any" } })
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Tax (10%)</label>
+                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @readonly = "readonly", @id = "tax", @step = "any" } })
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Grandtotal</label>
+                @Html.EditorFor(model => model.GrandTotal, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @readonly = "readonly", @id = "grandtotal", @step = "any" } })
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Petty Cash</label>
+                @Html.EditorFor(model => model.Cash, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0",  @id = "cash", @step = "any" } })
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Change</label>
+                @Html.EditorFor(model => model.Change, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @readonly = "readonly", @id = "change", @step = "any" } })
+            </div>
+
+            <div class="clearfix"></div>
+            <hr>
+
+            <div class="form-group">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i>&nbsp;Save & Finish
+                        </button>
+                    </div>
+                    <div class="pull-right">
+                        <button type="reset" class="btn btn-warning">
+                            <i class="fa fa-refresh"></i>&nbsp;Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/Scripts/App/sales.js?@Guid.NewGuid()"></script>
+}

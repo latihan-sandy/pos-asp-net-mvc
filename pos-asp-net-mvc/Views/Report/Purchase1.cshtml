@@ -1,0 +1,93 @@
+﻿@using pos_asp_net_mvc.Entities
+@using pos_asp_net_mvc.Models
+@{
+    Layout = null;
+    var transaction = (List<Transaction>)ViewBag.Transaction;
+    var db = new ApplicationDbContext();
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+    <meta name="author" content="Sandy Andryanto">
+    <title> Point Of Sale - Print Report Purchase Order</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="">
+        <div class="container-fluid table-responsive">
+            <h1 class='text-center'>
+                PURCHASE ORDER REPORT
+            </h1>
+            <hr>
+            @{
+                if (transaction != null)
+                {
+                    foreach (var Model in transaction)
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Invoice Date : @Model.InvoiceDate </th>
+                                    <th colspan="2">Invoice Number : @Model.InvoiceNumber</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Supplier : @Model.Supplier.Name</th>
+                                    <th colspan="2">Casheir : @Model.User.UserName</th>
+                                </tr>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+                                        var details = db.TransactionDetails.Where(x => x.TransactionId == Model.Id).ToList();
+                                        if (details != null)
+                                        {
+                                            foreach (var row in details)
+                                            {
+                                            <tr>
+                                                <td>@row.Product.Sku - @row.Product.Name</td>
+                                                <td>@row.Price</td>
+                                                <td>@row.Qty</td>
+                                                <td>@row.Total</td>
+                                            </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                        <tr class='text-center'>
+                                            <td colspan='4'>
+                                                -- No Items --
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">Grand Total : @Model.GrandTotal</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                                        }
+                                    }
+            }
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+﻿@model pos_asp_net_mvc.Models.UserEditViewModel
+@using Microsoft.AspNet.Identity.EntityFramework
+@{
+    ViewBag.Title = "User";
+    var Roles = (List<IdentityRole>)ViewBag.Roles;
+}
+
+<h1 class="page-header">
+    User
+    <small>Management</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="javascript:void(0);">Master</a></li>
+    <li><a href="@Url.Action("Index", "User")">User</a></li>
+    <li class="active">Edit</li>
+</ol>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h1></h1>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                <i class="fa fa-edit"></i>&nbsp;<strong>Edit Data</strong> 
+            </div>
+            <div class="pull-right">
+                <a href="@Url.Action("Index", "User")" class="btn btn-sm btn-primary">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Back
+                </a>
+                <a href="@Url.Action("Create", "User")" class="btn btn-sm btn-success">
+                    <i class="fa fa-plus"></i>&nbsp;Create New
+                </a>
+                <a href="@Url.Action("Delete", "User", new {  id = Model.Id })" class="btn btn-sm btn-danger" id="btn-delete-data">
+                    <i class="fa fa-trash"></i>&nbsp;Delete
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("Edit", "User", null, FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal", @id = "form-submit", @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumber, "Phone Number", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ConfirmPassword, "Confirm password", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="roles">Roles :</label>
+                <div class="col-md-10">
+                    @{
+                        foreach (var row in Roles)
+                        {
+                            var selectedText = "";
+                            var roleSelected = Model.Roles;
+                            foreach (var r in roleSelected)
+                            {
+                                if (r == row.Name)
+                                {
+                                    selectedText = "checked";
+                                }
+                            }
+
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="Roles" value="@row.Name" @selectedText> @row.Name
+                            </label>
+                        }
+                    }
+                    <p></p>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-save"></i>&nbsp;Save
+                    </button>
+                    <button type="reset" class="btn btn-warning">
+                        <i class="fa fa-refresh"></i>&nbsp;Reset
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="panel-footer"></div>
+</div>

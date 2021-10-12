@@ -1,0 +1,60 @@
+﻿@using pos_asp_net_mvc.Models
+@{
+    Layout = null;
+    var transaction = (List<Purchase2>)ViewBag.Transaction;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+    <meta name="author" content="Sandy Andryanto">
+    <title> Point Of Sale - Print Report Purchase Order</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="">
+        <div class="container-fluid table-responsive">
+            <h1 class='text-center'>
+                PURCHASE ORDER REPORT BY SUPPLIER
+            </h1>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>Total Items</th>
+                        <th>Total Purchase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @{
+                       if (transaction != null)
+                       {
+                           foreach(var row in transaction)
+                           {
+                               <tr>
+                                   <td>@row.SupplierName</td>
+                                   <td>@row.TotalItems</td>
+                                   <td>@row.GrandTotal</td>
+                               </tr>
+                           }
+                       }
+                       else
+                       {
+                        <tr class="text-center">
+                            <td colspan="3">
+                                -- No Data --
+                            </td>
+                        </tr>
+                       }
+                }
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
